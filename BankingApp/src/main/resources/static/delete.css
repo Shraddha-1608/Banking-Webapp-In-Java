@@ -1,0 +1,74 @@
+@charset "UTF-8";
+@charset "UTF-8";
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('https://cdn.aarp.net/content/dam/aarp/money/budgeting_savings/2019/11/1140-classic-bank-building.imgcache.revda6cd0ccbfee5230e5d4178390056c67.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 20px; /* Adjust top position as needed */
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    margin: 0;
+}
+
+form {
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+    margin-top: 80px; /* Space below the header */
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+input[type="number"] {
+    width: calc(100% - 22px); /* Adjust for padding and borders */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #f44336; /* Red color for delete action */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e53935; /* Slightly darker red for hover effect */
+}
+
+#result {
+    margin-top: 20px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}

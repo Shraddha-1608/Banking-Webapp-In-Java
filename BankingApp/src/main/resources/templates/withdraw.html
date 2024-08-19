@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdraw Funds</title>
+  </head>
+    <link rel="stylesheet" type="text/css" href="static/withdraw.css">
+    
+ 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('withdraw-form');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const id = document.getElementById('id').value;
+                const amount = document.getElementById('amount').value;
+
+                fetch(`/api/accounts/${id}/withdraw`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ amount: parseFloat(amount) })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => { throw new Error(text); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const resultDiv = document.getElementById('result');
+                    <!-- JavaScript -->
+                    resultDiv.innerHTML = `
+                        <p>Account ID: ${data.id}</p>
+                        <p>Account Holder Name: ${data.accountHolderName}</p>
+                        <p>New Balance: ${data.balance}</p>
+                    `;
+                })
+                .catch(error => {
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+                });
+            });
+        });
+    </script>
+
+<body>
+    <h1>Withdraw Funds</h1>
+    <form id="withdraw-form">
+        <label for="id">Account ID:</label>
+        <input type="number" id="id" name="id" required><br>
+
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" step="0.01" required><br>
+
+        <button type="submit">Withdraw</button>
+    </form>
+
+    <div id="result"></div>
+</body>
+</html>

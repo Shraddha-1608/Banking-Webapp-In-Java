@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+     <link rel="stylesheet" href="static/createAccount.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Create Account</h1>
+        <form id="createAccountForm">
+        <br>
+            <label for="accountHolderName">Account Holder Name:</label>
+            <input type="text" id="accountHolderName" name="accountHolderName" required>
+        </br>
+        <br> 
+            <label for="balance">Initial Balance:</label>
+            <input type="number" id="balance" name="balance" required>
+        </br>
+        <br>
+            <button type="submit">Create Account</button>
+        </br>    
+        </form>
+        <div id="successMessage" class="hidden"></div>
+    </div>
+
+    <script>
+        document.getElementById('createAccountForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const accountHolderName = document.getElementById('accountHolderName').value;
+            const balance = document.getElementById('balance').value;
+
+            try {
+                const response = await fetch('/api/accounts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ accountHolderName, balance })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const successMessage = document.getElementById('successMessage');
+                    successMessage.textContent = `Account created successfully with ID: ${data.id}`;
+                    successMessage.classList.remove('hidden');
+
+                    // Redirect to home page after a short delay
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 3000);
+                } else {
+                    alert('Failed to create account. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

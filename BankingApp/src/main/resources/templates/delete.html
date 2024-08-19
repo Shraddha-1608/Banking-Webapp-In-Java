@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Account</title>
+    <link rel="stylesheet" href="static/delete.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <header>
+        <h1>Delete Account</h1>
+    </header>
+    <main>
+        <form id="delete-form" onsubmit="return deleteAccount()">
+        <br>
+            <label for="id">Account ID:</label>
+            <input type="number" id="id" name="id" required>
+         </br>
+         <br>
+            <button type="submit">Delete Account</button>
+          </br>  
+        </form>
+        <div id="result"></div>
+    </main>
+    <script>
+        function deleteAccount() {
+            const id = document.getElementById('id').value;
+            fetch(`/api/accounts/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text(); // Read the response text
+                } else {
+                    throw new Error('Account not found');
+                }
+            })
+            .then(message => {
+                document.getElementById('result').innerText = message;
+                document.getElementById('delete-form').reset(); // Reset the form fields
+            })
+            .catch(error => {
+                document.getElementById('result').innerText = 'An error occurred: ' + error.message;
+            });
+            return false; // Prevent form submission
+        }
+    </script>
+</body>
+</html>
